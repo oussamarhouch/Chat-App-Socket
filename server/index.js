@@ -1,15 +1,39 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const session = require("express-session");
+const passport = require("passport");
 const mongoose = require("mongoose");
+require("dotenv").config();
+
+const register = require("./services/Register");
+const login = require("./services/Login");
+const logout = require("./services/Logout");
+const message = require("./services/MessageService");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
+
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-mongoose.connect("mongodb://127.0.0.1:27017/chatApp", {
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -21,36 +45,10 @@ db.once("open", () => {
   console.log("Connected to database");
 });
 
-const messageSchema = new mongoose.Schema({
-  text: String,
-  sender: String,
-  timestamp: {
-    type: Date,
-    default: Date.now,
-  },
-});
-
-const Message = mongoose.model("Message", messageSchema);
-
-app.post("/api/messages", async (req, res) => {
-  try {
-    const { text, sender } = req.body;
-    const message = new Message({ text, sender });
-    await message.save();
-    res.status(201).send(message);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
-
-app.get("/api/messages", async (req, res) => {
-  try {
-    const messages = await Message.find().sort({ timestamp: 1 });
-    res.statut(200).send(messages);
-  } catch (error) {
-    res.statut(500).send(error);
-  }
-});
+app.use("", register);
+app.use("", login);
+app.use("", logout);
+app.use("", message);
 
 app.listen(PORT, () => {
   console.log("Server is running on port " + PORT);

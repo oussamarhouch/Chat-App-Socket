@@ -40,6 +40,7 @@ function Chat() {
 
   return (
     <div className="chat">
+      <h1>Chat</h1>
       <div className="messages">
         {messages.map((message) => (
           <div key={message._id} className="message">
