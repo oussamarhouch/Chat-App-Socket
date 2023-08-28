@@ -28,8 +28,13 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => done(null, user.id));
-passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => done(err, user));
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
 });
 
 router.post("/login", (req, res, next) => {
@@ -44,7 +49,8 @@ router.post("/login", (req, res, next) => {
         .status(401)
         .json({ success: false, message: "Incorrect username or password." });
     }
-    req.logIn(user, (err) => {
+
+    req.login(user, (err) => {
       if (err) {
         return res
           .status(500)
@@ -52,7 +58,11 @@ router.post("/login", (req, res, next) => {
       }
       return res
         .status(200)
-        .json({ success: true, message: "Logged in successfully." });
+        .json({
+          success: true,
+          message: "Logged in successfully.",
+          userId: user.id,
+        });
     });
   })(req, res, next);
 });

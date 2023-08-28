@@ -4,7 +4,7 @@ import "../../assets/css/Navbar.css";
 
 function Navbar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const navigate = useNavigate(); // Initialize useHistory
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsAuthenticated(true);
@@ -20,7 +20,7 @@ function Navbar() {
 
       if (response.ok) {
         setIsAuthenticated(false);
-        console.log("Logged out successfully.");
+        localStorage.removeItem("userId");
 
         navigate("/signin");
       } else {
@@ -34,7 +34,9 @@ function Navbar() {
   return (
     <div className="navbar">
       <h1>Navbar</h1>
-      {isAuthenticated && <button onClick={handleLogout}>Logout</button>}
+      {localStorage.getItem("userId") != null && (
+        <button onClick={handleLogout}>Logout</button>
+      )}
     </div>
   );
 }

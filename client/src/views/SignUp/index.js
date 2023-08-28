@@ -31,6 +31,7 @@ function SignUp() {
         }
       );
       if (response.data.success) {
+        localStorage.setItem("userId", response.data.userId);
         navigate("/chat");
       }
     } catch (error) {

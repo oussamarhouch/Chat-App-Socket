@@ -26,6 +26,7 @@ function SignIn() {
       );
 
       if (response.data.success) {
+        localStorage.setItem("userId", response.data.userId);
         navigate("/chat");
       } else {
         console.error("Login not successful:", response.data.message);
