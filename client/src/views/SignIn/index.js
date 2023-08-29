@@ -38,7 +38,7 @@ function SignIn() {
 
   return (
     <div className="signiDivn">
-      {/* <h1>friends</h1>
+      <h1>friends</h1>
       <input
         type="text"
         placeholder="Username"
@@ -51,7 +51,7 @@ function SignIn() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={handleLogin}>Login</button> */}
+      <button onClick={handleLogin}>Login</button>
     </div>
   );
 }
