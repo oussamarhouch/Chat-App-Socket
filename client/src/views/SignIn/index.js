@@ -64,7 +64,7 @@ function SignIn() {
         </button>
         <div className="social">
           Don't have one.
-          <div className="go" onClick={() => navigate("/signup")} S>
+          <div className="go" onClick={() => navigate("/signup")}>
             <i className="fab fa-google"></i>
             Sign Up
           </div>
