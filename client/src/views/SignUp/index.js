@@ -5,8 +5,6 @@ import "../../assets/css/SignUp.css";
 
 function SignUp() {
   const [username, setUsername] = useState("");
-  const [familyName, setFamilyName] = useState("");
-  const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -19,8 +17,6 @@ function SignUp() {
         api + "/register",
         {
           username,
-          familyName,
-          firstName,
           email,
           password,
         },
@@ -41,38 +37,46 @@ function SignUp() {
 
   return (
     <div className="SignUp">
-      <h1>Register</h1>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Family name"
-        value={familyName}
-        onChange={(e) => setFamilyName(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="First name"
-        value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleRegister}>Register</button>
+      <form className="register-form">
+        <h3>Register Here</h3>
+        <label htmlFor="username">Email</label>
+        <input
+          type="email"
+          placeholder="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          id="username"
+        />
+
+        <label htmlFor="username">Username</label>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          id="username"
+        />
+
+        <label htmlFor="password">Password</label>
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          id="password"
+        />
+
+        <button className="buttonForm" onClick={handleRegister}>
+          Register
+        </button>
+        <div className="social">
+          Already have one
+          <div className="go-register" onClick={() => navigate("/signin")} S>
+            <i className="fab fa-google"></i>
+            Sign In
+          </div>
+        </div>
+      </form>
     </div>
   );
 }

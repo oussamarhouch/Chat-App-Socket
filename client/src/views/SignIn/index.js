@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../../assets/css/SignUp.css";
+import "../../assets/css/SignIn.css";
 
 function SignIn() {
   const [username, setUsername] = useState("");
@@ -37,21 +37,39 @@ function SignIn() {
   };
 
   return (
-    <div className="signiDivn">
-      <h1>friends</h1>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleLogin}>Login</button>
+    <div className="signin">
+      <form className="login-form">
+        <h3>Login Here</h3>
+
+        <label htmlFor="username">Username</label>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          id="username"
+        />
+
+        <label htmlFor="password">Password</label>
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          id="password"
+        />
+
+        <button className="buttonForm" onClick={handleLogin}>
+          Log In
+        </button>
+        <div className="social">
+          Don't have one.
+          <div className="go" onClick={() => navigate("/signup")} S>
+            <i className="fab fa-google"></i>
+            Sign Up
+          </div>
+        </div>
+      </form>
     </div>
   );
 }
