@@ -1,14 +1,30 @@
 const express = require("express");
 const Message = require("../models/Message");
+const Conversation = require("../models/Conversation");
 
 const router = express.Router();
 
 router.post("/api/messages", async (req, res) => {
   try {
-    const { text, sender } = req.body;
+    const { text, sender, receiver } = req.body;
     const message = new Message({ text, sender });
     await message.save();
-    res.status(201).send(message);
+
+    let conversation = await Conversation.findOne({
+      senders: { $all: [sender, receiver] },
+    });
+    if (!conversation) {
+      conversation = new Conversation({
+        senders: [sender, receiver],
+        texts: [message._id],
+      });
+    } else {
+      conversation.texts.push(message._id);
+    }
+
+    await conversation.save();
+
+    res.status(201).send("writting correctly");
   } catch (error) {
     res.status(500).send(error);
   }
