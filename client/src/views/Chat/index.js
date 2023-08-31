@@ -14,7 +14,6 @@ function Chat() {
     fetchMessages();
     fetchFriends();
   }, []);
-  console.log(receiver);
 
   const fetchFriends = async () => {
     try {
@@ -93,23 +92,24 @@ function Chat() {
       </div>
       <div className="chatBox">
         <form className="login-form">
-          <h3>Login Here</h3>
-
-          <div className="messages">
-            <ul>
-              <li className="message">dv</li>
-              <li className="message">dv</li>
-              <li className="message">dv</li>
-              <li className="message">dv</li>
-              <li className="message">dv</li>
-              <li className="message">dv</li>
-              <li className="message">dv</li>
-            </ul>
-          </div>
-
-          <input type="text" placeholder="Enter Message" id="password" />
-
-          <button className="buttonForm">Send</button>
+          {receiver === "" ? null : (
+            <>
+              <h3>Login Here</h3>
+              <div className="messages">
+                <ul>
+                  <li className="message">dv</li>
+                  <li className="message">dv</li>
+                  <li className="message">dv</li>
+                  <li className="message">dv</li>
+                  <li className="message">dv</li>
+                  <li className="message">dv</li>
+                  <li className="message">dv</li>
+                </ul>
+              </div>
+              <input type="text" placeholder="Enter Message" id="password" />
+              <button className="buttonForm">Send</button>
+            </>
+          )}
         </form>
       </div>
     </div>
