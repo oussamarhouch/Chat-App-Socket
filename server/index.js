@@ -9,6 +9,7 @@ require("dotenv").config();
 const register = require("./services/Register");
 const login = require("./services/Login");
 const logout = require("./services/Logout");
+const users = require("./services/users");
 const message = require("./services/MessageService");
 
 const app = express();
@@ -49,6 +50,7 @@ app.use("", register);
 app.use("", login);
 app.use("", logout);
 app.use("", message);
+app.use("", users);
 
 app.listen(PORT, () => {
   console.log("Server is running on port " + PORT);

@@ -10,7 +10,21 @@ function Chat() {
 
   useEffect(() => {
     fetchMessages();
+    fetchFriends();
   }, []);
+
+  const fetchFriends = async () => {
+    try {
+      const response = (await axios.get(api + "/users")).data;
+      const usernames = response.map((user) => ({
+        id: user.id,
+        username: user.username,
+      }));
+      console.log(usernames);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const fetchMessages = async () => {
     try {
@@ -58,6 +72,36 @@ function Chat() {
         />
         <button type="submit">Send</button>
       </form> */}
+
+      <div className="friends">
+        <ul>
+          <li>Oussama</li>
+          <li>Aimane</li>
+          <li>Ilyass</li>
+        </ul>
+      </div>
+      <div className="chatBox">
+        <form className="login-form">
+          <h3>Login Here</h3>
+
+          <div className="messages">
+            <ul>
+              <li className="message">dv</li>
+              <li className="message">dv</li>
+              <li className="message">dv</li>
+              <li className="message">dv</li>
+              <li className="message">dv</li>
+              <li className="message">dv</li>
+              <li className="message">dv</li>
+            </ul>
+          </div>
+
+          <label htmlFor="password">Password</label>
+          <input type="password" placeholder="Password" id="password" />
+
+          <button className="buttonForm">Log In</button>
+        </form>
+      </div>
     </div>
   );
 }
