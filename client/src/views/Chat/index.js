@@ -6,21 +6,24 @@ function Chat() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [sender, setSender] = useState("User");
+  const [receiver, setReceiver] = useState("");
+  const [friends, setFriends] = useState({});
   const api = "http://localhost:5000";
 
   useEffect(() => {
     fetchMessages();
     fetchFriends();
   }, []);
+  console.log(receiver);
 
   const fetchFriends = async () => {
     try {
       const response = (await axios.get(api + "/users")).data;
       const usernames = response.map((user) => ({
-        id: user.id,
+        id: user._id,
         username: user.username,
       }));
-      console.log(usernames);
+      setFriends(usernames);
     } catch (error) {
       console.error(error);
     }
@@ -75,9 +78,17 @@ function Chat() {
 
       <div className="friends">
         <ul>
-          <li>Oussama</li>
-          <li>Aimane</li>
-          <li>Ilyass</li>
+          {friends.map((username) => (
+            <li
+              className="friendsList"
+              onClick={() => {
+                setReceiver(username.id);
+              }}
+              key={username.id}
+            >
+              {username.username}
+            </li>
+          ))}
         </ul>
       </div>
       <div className="chatBox">
@@ -96,10 +107,9 @@ function Chat() {
             </ul>
           </div>
 
-          <label htmlFor="password">Password</label>
-          <input type="password" placeholder="Password" id="password" />
+          <input type="text" placeholder="Enter Message" id="password" />
 
-          <button className="buttonForm">Log In</button>
+          <button className="buttonForm">Send</button>
         </form>
       </div>
     </div>

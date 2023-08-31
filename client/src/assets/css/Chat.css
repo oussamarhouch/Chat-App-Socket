@@ -119,7 +119,7 @@ input {
 
 .friends {
   height: 520px;
-  width: 400px;
+  width: 320px;
   background-color: rgba(255, 255, 255, 0.13);
   position: absolute;
   transform: translate(-50%, -50%);
@@ -129,7 +129,7 @@ input {
   backdrop-filter: blur(10px);
   border: 2px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
-  padding: 50px 35px;
+  padding: 50px 5px;
 }
 .friends * {
   font-family: "Poppins", sans-serif;
@@ -143,4 +143,14 @@ input {
   font-weight: 500;
   line-height: 42px;
   text-align: center;
+}
+
+.friendsList {
+  width: 100%;
+  height: 60px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }
