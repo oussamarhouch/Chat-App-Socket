@@ -33,7 +33,7 @@ router.post("/api/messages", async (req, res) => {
 
 router.get("/api/message", async (req, res) => {
   try {
-    const id = req.body.id;
+    const id = req.query.id;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).send("Invalid ID");
@@ -55,8 +55,8 @@ router.get("/api/message", async (req, res) => {
 
 router.get("/api/conversation", async (req, res) => {
   try {
-    const sender = req.body.sender;
-    const receiver = req.body.receiver;
+    const sender = req.query.sender;
+    const receiver = req.query.receiver;
     console.log(sender);
 
     const conversation = await Conversation.find({

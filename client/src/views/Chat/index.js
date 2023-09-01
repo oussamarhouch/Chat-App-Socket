@@ -11,8 +11,8 @@ function Chat() {
   const api = "http://localhost:5000";
 
   useEffect(() => {
-    fetchMessages();
     fetchFriends();
+    fetchMessages();
   }, []);
 
   const fetchFriends = async () => {
@@ -27,6 +27,39 @@ function Chat() {
       setFriends(filteredUsernames);
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const fetchConversation = async () => {
+    try {
+      const response = await axios.get(api + "/api/conversation", {
+        params: {
+          sender: sender,
+          receiver: receiver,
+        },
+      });
+
+      const texts = response.data[0].texts;
+
+      const fetchedMessages = [];
+
+      for (const text of texts) {
+        try {
+          const messageResponse = await axios.get(api + "/api/message", {
+            params: {
+              id: text,
+            },
+          });
+
+          fetchedMessages.push(messageResponse.data);
+        } catch (messageError) {
+          console.error("Error fetching message:", messageError);
+        }
+      }
+
+      setMessages(fetchedMessages);
+    } catch (error) {
+      console.error("Error fetching conversation:", error);
     }
   };
 
@@ -85,6 +118,7 @@ function Chat() {
               className="friendsList"
               onClick={() => {
                 setReceiver(username.id);
+                fetchConversation();
               }}
               key={username.id}
             >
@@ -97,16 +131,14 @@ function Chat() {
         <form className="login-form" onSubmit={handleSubmit}>
           {receiver === "" ? null : (
             <>
-              <h3>Login Here</h3>
+              <h3>Send Message</h3>
               <div className="messages">
                 <ul>
-                  <li className="message">dv</li>
-                  <li className="message">dv</li>
-                  <li className="message">dv</li>
-                  <li className="message">dv</li>
-                  <li className="message">dv</li>
-                  <li className="message">dv</li>
-                  <li className="message">dv</li>
+                  {messages.map((message) => (
+                    <li className="message" key={message._id}>
+                      {message.text}
+                    </li>
+                  ))}
                 </ul>
               </div>
               <input
